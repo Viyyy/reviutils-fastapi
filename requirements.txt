@@ -1,0 +1,9 @@
+fastapi
+pyyaml
+uvicorn
+sqlalchemy==2.0.20
+sqlacodegen==3.0.0rc3
+python-jose[cryptography]
+passlib[bcrypt]
+pydantic[email]
+python-multipart

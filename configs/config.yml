@@ -1,0 +1,20 @@
+app:
+  config:
+    title: api标题
+    description: api描述
+    version: 0.0.1
+server:
+  host: 0.0.0.0
+  port: 8080
+  reload: true
+cors:
+    allow_origins: ['*']
+sqlalchemy:
+  echo: True
+database:
+  sqlite:
+    auth:
+      url: "sqlite:///./databases/auth.sqlite3"
+auth:
+    # 密钥，cmd输入获取：openssl rand -hex 32
+    SECRET_KEY: beaa7dbf68bdf1a46298e5258629cdec898a16df57aeb133c63bdcd2b0476a80
