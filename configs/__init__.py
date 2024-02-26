@@ -5,9 +5,9 @@ class WebConfig():
         with open(config_path, 'r', encoding='utf-8') as f:
             self.config = yaml.safe_load(f)
             
-        root_path = self.config['server'].get('root_path')
-        if root_path:
-            self.config['app']['openapi_url'] = root_path + '/openapi'
+        # root_path = self.config['server'].get('root_path')
+        # if root_path:
+        #     self.config['app']['openapi_url'] = root_path + '/openapi'
     
     @property
     def sqlite_db(self):
