@@ -1,7 +1,14 @@
 import yaml
+import argparse
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument('-c', '--config',type=str, default='dev.yml',help='放在configs文件夹下的配置文件名称')
+
+args = parser.parse_args()
 
 class WebConfig():
-    def __init__(self, config_path='configs/config.yml'):
+    def __init__(self, config_path=f'configs/{args.config}'):
         with open(config_path, 'r', encoding='utf-8') as f:
             self.config = yaml.safe_load(f)
     

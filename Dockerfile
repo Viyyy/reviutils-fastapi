@@ -18,4 +18,4 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 RUN apt-get update && apt-get install -y nano
 
 # 
-CMD ["python","main.py"]
+CMD ["python","main.py",'--config','published.yml']
