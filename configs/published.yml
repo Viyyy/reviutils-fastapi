@@ -16,3 +16,4 @@ database:
   sqlite:
     auth:
       url: "sqlite:///./databases/auth.sqlite3"
+SECRET_KEY: 

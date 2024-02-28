@@ -16,7 +16,7 @@ Base.metadata.create_all(bind=engine)
 # 加密方法
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 # 密钥，cmd输入获取：openssl rand -hex 32
-SECRET_KEY = 'beaa7dbf68bdf1a46298e5258629cdec898a16df57aeb133c63bdcd2b0476a80'
+SECRET_KEY = webConfig.sk
 ALGORITHM = 'HS256'
 # TOKEN有效时长
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
