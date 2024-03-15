@@ -1,8 +1,8 @@
 app:
   config:
-    title: api标题
-    description: api描述
-    version: 0.0.1
+    title: reviutils-fastapi
+    description: ReviUtils相关功能fastapi接口文档
+    version: demo
     root_path: #使用nginx反向代理时设置, "/api"
 server:
   host: 0.0.0.0
