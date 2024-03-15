@@ -3,3 +3,4 @@
 .vercel
 !databases/auth.sqlite3
 configs/**.yml
+venv/**
