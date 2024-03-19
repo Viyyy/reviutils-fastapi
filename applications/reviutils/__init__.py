@@ -1,10 +1,13 @@
+from typing import List
+from enum import Enum
+
+import pandas as pd
 from fastapi import APIRouter,Query,HTTPException
+from pydantic import BaseModel
+
 from reviutils.common import get_passrate
 from reviutils.noisepollution.splhelper import calc_Leq, calc_LA,calc_Lt,calc_Ldn
-import pandas as pd
-from typing import List
-from .schemas import FuncArea
-from .spl import NoiseLevel
+from reviutils.noisepollution.funcarea import FuncAreaSimple, get_func_area_info
 
 router = APIRouter()
 
@@ -38,27 +41,21 @@ async def Calc_Ldn(HourData:List[int]=Query(description='小时数据列表'),LD
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
     
-@router.get('/limit')
-async def Get_Limit(area:FuncArea=Query(description='功能区类别')):
+@router.get('/FuncAreaInfo')
+async def Get_func_area_info(area:FuncAreaSimple=Query(description='功能区类别')):
     '''获取环境噪声限值'''
-    nl = NoiseLevel(area.value)
-    return {
-        'Area':area.value+'类',
-        'Day':nl.day_level,
-        'Night':nl.night_level,
-    }
+    result = get_func_area_info(area.value)
+    return result.model_dump()
 
 @router.get('/passrate')
-async def Get_Passrate(area:FuncArea=Query(description='功能区类别'),is_day:bool=Query(description='昼夜间'),LData:List[float]=Query(description='声级数据列表')):
+async def Get_Passrate(area:FuncAreaSimple=Query(description='功能区类别'),is_day:bool=Query(description='昼夜间'),LData:List[float]=Query(description='声级数据列表')):
     '''获取噪声达标率'''
     data = pd.Series(LData)
-    if is_day:
-        limit = NoiseLevel(area.value).day_level
-    else:
-        limit = NoiseLevel(area.value).night_level
+    funcarea_info:BaseModel = get_func_area_info(area.value)
+    limit = funcarea_info.lmtd if is_day else funcarea_info.lmtn # 获取限值
     passdata = data[data<=limit]
     return {
-        'Area':area.value+'类',
+        'Area':area,
         'LData':LData,
         'Limit': limit,
         "is_day":is_day,
